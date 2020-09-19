@@ -1,15 +1,13 @@
-import { ISubscriber } from "../ISubscriber";
-import { PubSubConstants } from "../../PubSubConstants";
-import { DateTime } from 'luxon'
+import { DateTime } from 'luxon';
+import { PubSubConstants } from '../../PubSubConstants';
+import FunctionCallSubscriber from '../FunctionCallSubscriber';
 
-export default class OnMinuteChanged implements ISubscriber<DateTime> {
+export default class OnMinuteChanged extends FunctionCallSubscriber<DateTime> {
+	constructor(callback: (data: DateTime) => void) {
+		super(callback);
+	}
 
-    getName(): PubSubConstants {
-        return PubSubConstants.MINUTE_CHANGED
-    }
-
-    trigger(data: DateTime): void {
-        console.log("minute changed " + data.toLocal())
-    }
-
+	getName(): PubSubConstants {
+		return PubSubConstants.MINUTE_CHANGED;
+	}
 }

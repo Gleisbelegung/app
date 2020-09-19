@@ -3,12 +3,12 @@ import App from './App.svelte';
 const app = new App({
 	target: document.body,
 	props: {
-		application:  {
+		application: {
 			displayName: 'Template',
 			name: 'template',
-			url: 'template.serrer.dev'
-		}
-	}
+			url: 'template.serrer.dev',
+		},
+	},
 });
 
 export default app;

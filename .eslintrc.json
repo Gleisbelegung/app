@@ -1,0 +1,35 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true
+    },
+    "extends": [
+        "airbnb-base"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": 12,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint",
+        "svelte3"
+    ],
+    "overrides": [
+        {
+            "files": [
+                "*.svelte"
+            ],
+            "processor": "svelte3/svelte3"
+        }
+    ],
+    "rules": {
+        "import/extensions": ["error", "never"],
+        "import/no-unresolved": [0, {}],
+        "indent": ["error", "tab"],
+        "import/no-mutable-exports": [0],
+        "import/first": [0],
+        "import/prefer-default-export": [0],
+        "no-tabs": [0]
+    }
+}

@@ -1,26 +1,19 @@
 <script lang="typescript">
-	export let application;
-
-	import Routes from './Routes.svelte'
+	import Routes from './Routes.svelte';
 	import Navbar from './components/Navbar.svelte';
 
-	import MessageProcessor from './scripts/communication/message_processors/MessageProcessor'
-	import WebSocketSingleton from './scripts/communication/WebSocketSingleton'
+	import MessageProcessor from './scripts/communication/message_processors/MessageProcessor';
+	import WebSocketSingleton from './scripts/communication/WebSocketSingleton';
 
-	var processor = new MessageProcessor()
+	export let application;
 
-	var ws = WebSocketSingleton.getInstance();
+	const processor = new MessageProcessor();
 
-	// ws.addEventListener('open', function (event) {
-	// 	// ws.send('Hello Server!');
-	// });
+	const ws = WebSocketSingleton.getInstance();
 
-	// // Listen for messages
-	ws.addEventListener('message', function (event) {
+	ws.addEventListener('message', (event) => {
 		console.log('Message from server: ', event.data);
-		// ws.send("<register protokoll='1' name='MonitorWand' text='Demo-Abfahrtwand' version='0.9' autor='JS' />")
-
-		processor.readMessage(event.data)
+		processor.readMessage(event.data);
 	});
 </script>
 
