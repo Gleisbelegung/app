@@ -1,17 +1,42 @@
 <script lang="ts">
-	import { Duration } from 'luxon';
+	import { DateTime, Duration } from 'luxon';
 	import { platforms } from '../stores/platforms';
 	import { startTime } from '../stores/time';
 	import IdFormatter from '../scripts/common/IdFormatter';
 	import PubSub from '../scripts/pub_sub/PubSub';
 	import OnMinuteChanged from '../scripts/pub_sub/subscriber/time/OnMinuteChanged';
+	import TableRow from './TableRow.svelte'
+
+	let tableBodyElement;
 
 	let timePerRow;
-	$: timePerRow = $startTime;
+	$: if ($startTime !== null) {
+		updateStarttime($startTime);
+		createTable();
+	}
+
+	function updateStarttime(startTime: DateTime) {
+		timePerRow = DateTime.fromFormat(startTime.toFormat('HH:mm'), 'HH:mm')
+	}
+
+	function createTable() {
+		var options = {
+			target: tableBodyElement,
+			props: {
+				time: undefined
+			}
+		};
+
+		for (let i = 0; i < 60; i++) {
+			options.props.time = getTime();
+
+			let r = new TableRow(options);
+		}
+	}
 
 	function getTime() {
 		timePerRow = timePerRow.plus(Duration.fromMillis(1000 * 60));
-		return timePerRow.toFormat('HH:mm');
+		return timePerRow;
 	}
 
 	PubSub.subscribe(
@@ -21,6 +46,7 @@
 	);
 </script>
 
+
 <table class="table is-striped is-hoverable is-bordered">
 	<thead>
 		<th />
@@ -28,10 +54,9 @@
 			<th><span>{platform.name}</span></th>
 		{/each}
 	</thead>
-	<tbody>
-		{#if $startTime !== null && timePerRow !== null}
+	<tbody bind:this="{tableBodyElement}">
+		<!-- {#if $startTime !== null && timePerRow !== null}
 			{#each { length: 60 } as _, i}
-				<!-- {timePerRow = timePerRow.plus(Duration.fromMillis(1000 * 60))} -->
 				<tr>
 					<td>{getTime()}</td>
 					{#each $platforms as platform}
@@ -42,6 +67,6 @@
 					{/each}
 				</tr>
 			{/each}
-		{/if}
+		{/if} -->
 	</tbody>
 </table>

@@ -20,9 +20,11 @@ class PubSub {
 
 	public publish<T>(event: IEvent<T>) {
 		const subs = this.subscribers.get(event.getName());
-		subs.forEach((sub) => {
-			sub.trigger(event.getData());
-		});
+		if (subs !== undefined) {
+			subs.forEach((sub) => {
+				sub.trigger(event.getData());
+			});
+		}
 	}
 
 	public subscribe<T>(subsciber: ISubscriber<T>) {

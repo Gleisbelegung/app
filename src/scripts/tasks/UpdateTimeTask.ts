@@ -1,4 +1,4 @@
-import { Duration } from 'luxon';
+import { Duration, DateTime } from 'luxon';
 // eslint-disable-next-line
 import { get } from 'svelte/store';
 import { startTime, currentTime } from '../../stores/time';
@@ -21,7 +21,7 @@ export default class UpdateTimeTask {
 	private work() {
 		currentTime.update((time) => time.plus(Duration.fromMillis(1000)));
 
-		const time = get(currentTime);
+		const time: DateTime = get(currentTime);
 		PubSub.publish(new TimeChangeEvent(time));
 
 		if (this.lastSecond > time.second) {

@@ -13,5 +13,4 @@ export default abstract class FunctionCallSubscriber<T> implements ISubscriber<T
 	trigger(data: T): void {
 		this.callback(data);
 	}
-
 }

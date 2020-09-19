@@ -1,28 +1,26 @@
-import IMessageProcessor from './IMessageProcessor'
-import { MessageConstants } from '../MessageConstants'
-import { Element } from 'xml-js'
-import { DateTime } from 'luxon'
-import { startTime } from '../../../stores/time'
+import { Element } from 'xml-js';
+import { DateTime } from 'luxon';
+import IMessageProcessor from './IMessageProcessor';
+import { MessageConstants } from '../MessageConstants';
+import { startTime } from '../../../stores/time';
 import UpdateTimeTask from '../../tasks/UpdateTimeTask';
 
 export default class TimeProcessor implements IMessageProcessor {
-    
-    getName(): string {
-        return MessageConstants.TIME;
-    }
+	getName(): string {
+		return MessageConstants.TIME;
+	}
 
-    process(data: Element) {
-        var timeBefore = <number>data.attributes.sender;
-        var oldTime = parseInt(<string>data.attributes.zeit);
-        
-        var difference = Date.now() - timeBefore;
+	process(data: Element) {
+		const timeBefore = <number>data.attributes.sender;
+		const oldTime = parseInt(<string>data.attributes.zeit, 10);
 
-        var timestamp = oldTime + difference / 2;
+		const difference = Date.now() - timeBefore;
 
-        var d = DateTime.fromMillis(timestamp);
-        startTime.set(d);
+		const timestamp = oldTime + difference / 2;
 
-        new UpdateTimeTask()
-    }
+		const d = DateTime.fromMillis(timestamp);
+		startTime.set(d);
 
+		new UpdateTimeTask();
+	}
 }

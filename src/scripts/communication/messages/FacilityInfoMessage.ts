@@ -1,8 +1,7 @@
-import IMessage from "./IMessage";
+import IMessage from './IMessage';
 
 export default class FacilityInfoMessage implements IMessage {
-
-    getMessage(): string {
-        return "<anlageninfo />";
-    }
+	getMessage(): string {
+		return '<anlageninfo />';
+	}
 }

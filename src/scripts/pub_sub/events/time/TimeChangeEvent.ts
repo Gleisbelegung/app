@@ -1,19 +1,19 @@
-import { IEvent } from "../IEvent";
-import { PubSubConstants } from "../../PubSubConstants";
-import { DateTime } from 'luxon'
+import { DateTime } from 'luxon';
+import { IEvent } from '../IEvent';
+import { PubSubConstants } from '../../PubSubConstants';
 
 export default class TimeChangeEvent implements IEvent<DateTime> {
-    time: DateTime;
-    
-    constructor(time: DateTime) {
-        this.time = time;
-    }
+	time: DateTime;
 
-    getName(): PubSubConstants {
-        return PubSubConstants.TIME_CHANGED;
-    }
+	constructor(time: DateTime) {
+		this.time = time;
+	}
 
-    getData(): DateTime {
-        return this.time;
-    }
+	getName(): PubSubConstants {
+		return PubSubConstants.TIME_CHANGED;
+	}
+
+	getData(): DateTime {
+		return this.time;
+	}
 }

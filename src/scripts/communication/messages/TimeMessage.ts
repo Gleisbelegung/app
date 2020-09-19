@@ -1,15 +1,14 @@
-import IMessage from './IMessage'
-import { MessageConstants } from '../MessageConstants'
+import IMessage from './IMessage';
+import { MessageConstants } from '../MessageConstants';
 
 export default class TimeMessage implements IMessage {
-    private timestamp: number;
+	private timestamp: number;
 
-    constructor() {
-        this.timestamp = Date.now()
-    }
+	constructor() {
+		this.timestamp = Date.now();
+	}
 
-    getMessage(): string {
-        return `<${MessageConstants.TIME} sender='${this.timestamp}' />`
-    }
-
+	getMessage(): string {
+		return `<${MessageConstants.TIME} sender='${this.timestamp}' />`;
+	}
 }
