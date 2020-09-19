@@ -1,40 +1,32 @@
-import TrainDetails from "./TrainDetails";
-import TrainStop from "./TrainStop"
+import TrainDetails from './TrainDetails';
+import TrainStop from './TrainStop';
 
 export default class Train {
-    public readonly name: string;
-    public readonly id: number;
-    private _details: TrainDetails;
-    private _stops: TrainStop[];
+	public readonly name: string;
 
-    constructor (id: number, name: string) {
-        this.id = id;
-        this.name = name;
-        this._stops = [];
-    }
+	public readonly id: number;
+	private _details: TrainDetails;
+	private _stops: TrainStop[];
 
-    
-    public get details() : TrainDetails {
-        return this._details;
-    }
+	constructor(id: number, name: string) {
+		this.id = id;
+		this.name = name;
+		this._stops = [];
+	}
 
-    
-    public set details(v : TrainDetails) {
-        this._details = v;
-    }
-    
-    
-    public get stops() : TrainStop[] {
-        return this._stops;
-    }
-    
-    public set stops(v : TrainStop[]) {
-        this._stops = v;
-    }
-    
-    
+	public get details(): TrainDetails {
+		return this._details;
+	}
 
-    // public setTrainDetails(details: TrainDetails) {
-    //     this.details = details;
-    // }
+	public set details(v: TrainDetails) {
+		this._details = v;
+	}
+
+	public get stops(): TrainStop[] {
+		return this._stops;
+	}
+
+	public set stops(v: TrainStop[]) {
+		this._stops = v;
+	}
 }

@@ -30,6 +30,10 @@
         "import/no-mutable-exports": [0],
         "import/first": [0],
         "import/prefer-default-export": [0],
-        "no-tabs": [0]
+		"no-tabs": [0],
+		"lines-between-class-members": [0],
+		"no-underscore-dangle": [0],
+		"class-methods-use-this": "off",
+		"import/no-extraneous-dependencies": "off"
     }
 }

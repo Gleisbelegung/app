@@ -7,12 +7,13 @@
     "dev:routes": "svelte-navaid-filebased -D",
     "dev:svelte": "rollup -c -w",
     "start": "sirv public --single",
-    "lint": "eslint src/**/**/*.*"
+    "lint": "eslint src/**/*.*"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^12.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@types/luxon": "^1.24.4",
+    "@types/xml-js": "^1.0.0",
     "@typescript-eslint/eslint-plugin": "^4.1.0",
     "@typescript-eslint/parser": "^4.1.0",
     "autoprefixer": "^9.8.5",
