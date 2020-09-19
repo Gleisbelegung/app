@@ -1,3 +1,4 @@
+/* eslint-disable */
 export enum MessageConstants {
     PLATFORM_LIST = "bahnsteigliste",
     TRAIN_LIST = "zugliste",

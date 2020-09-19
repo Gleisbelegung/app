@@ -1,11 +1,9 @@
 <script>
-	/* eslint-disable */
 	import Navaid from 'navaid';
 	import { onDestroy } from 'svelte';
-	import Index from './routes/index.svelte';
-
+	import Index from './routes/index.svelte'
 	let Route;
-	let params;
+	let params=undefined
 	let uri = location.pathname;
 
 	function track(obj) {

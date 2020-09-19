@@ -1,23 +1,24 @@
-import IMessage from "./messages/IMessage";
+import IMessage from './messages/IMessage';
 
 export default class WebSocketSingleton {
-    private static instance: WebSocketSingleton;
-    private webSocket: WebSocket;
+	private static instance: WebSocketSingleton;
 
-    private constructor() {
-        console.log("creating new WebSocket")
-	    this.webSocket = new WebSocket("ws://localhost:3108");        
-    }
+	private webSocket: WebSocket;
 
-    public static getInstance() : WebSocket {
-        if (this.instance == undefined) {
-            this.instance = new WebSocketSingleton();
-        }
+	private constructor() {
+		console.log('creating new WebSocket');
+		this.webSocket = new WebSocket('ws://localhost:3108');
+	}
 
-        return this.instance.webSocket;
-    }
+	public static getInstance() : WebSocket {
+		if (this.instance === undefined) {
+			this.instance = new WebSocketSingleton();
+		}
 
-    public static send(message: IMessage): void {
-        this.getInstance().send(message.getMessage());
-    }
+		return this.instance.webSocket;
+	}
+
+	public static send(message: IMessage): void {
+		this.getInstance().send(message.getMessage());
+	}
 }
