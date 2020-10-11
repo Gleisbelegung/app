@@ -5,7 +5,7 @@ import { PubSubConstants } from './PubSubConstants';
 class PubSub {
 	private static instance: PubSub = null;
 
-	private subscribers: Map<PubSubConstants, ISubscriber<any>[]>;
+	private subscribers: Map<string, ISubscriber<any>[]>;
 
 	constructor() {
 		this.subscribers = new Map();

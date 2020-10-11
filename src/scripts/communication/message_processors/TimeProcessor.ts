@@ -1,5 +1,5 @@
 import { Element } from 'xml-js';
-import { DateTime } from 'luxon';
+import { DateTime, Zone } from 'luxon';
 import IMessageProcessor from './IMessageProcessor';
 import { MessageConstants } from '../MessageConstants';
 import { startTime } from '../../../stores/time';
@@ -18,7 +18,7 @@ export default class TimeProcessor implements IMessageProcessor {
 
 		const timestamp = oldTime + difference / 2;
 
-		const d = DateTime.fromMillis(timestamp);
+		const d = DateTime.fromMillis(timestamp, { zone: 'UTC' });
 		startTime.set(d);
 
 		new UpdateTimeTask();

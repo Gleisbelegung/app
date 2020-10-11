@@ -1,6 +1,6 @@
 import { PubSubConstants } from '../PubSubConstants';
 
 export interface IEvent<T> {
-    getName(): PubSubConstants;
+    getName(): string;
     getData(): T;
 }

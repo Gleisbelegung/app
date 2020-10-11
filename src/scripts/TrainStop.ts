@@ -1,23 +1,24 @@
+import { DateTime } from 'luxon';
 import Platform from './Platform';
 
 export default class TrainStop {
-	public readonly arrival: string;
-	public readonly departure: string;
+	public readonly arrival: DateTime;
+	public readonly departure: DateTime;
 	public readonly platform: Platform;
 	public readonly plannedPlatform: Platform;
-	public readonly flags: string;
+	public readonly rawFlags: string;
 
 	constructor(
-		arrival: string,
-		departure: string,
+		arrival: DateTime,
+		departure: DateTime,
 		platform: Platform,
 		plannedPlatform: Platform,
-		flags: string,
+		rawFlags: string,
 	) {
 		this.arrival = arrival;
 		this.departure = departure;
 		this.platform = platform;
 		this.plannedPlatform = plannedPlatform;
-		this.flags = flags;
+		this.rawFlags = rawFlags;
 	}
 }

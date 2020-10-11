@@ -28,11 +28,11 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-svelte": "^5.0.3",
     "rollup-plugin-terser": "^5.1.2",
-    "svelte": "^3.0.0",
+    "svelte": "^3.29.0",
     "svelte-navaid-filebased": "^1.0.7",
     "svelte-preprocess": "^4.1.2",
-    "tslib": "^2.0.1",
-    "typescript": "^4.0.2"
+    "tslib": "^2.0.3",
+    "typescript": "^4.0.3"
   },
   "dependencies": {
     "@rollup/plugin-typescript": "^5.0.2",
@@ -43,6 +43,8 @@
     "rollup-plugin-node-globals": "^1.4.0",
     "sass": "^1.26.10",
     "sirv-cli": "^0.4.4",
+    "string-to-color": "^2.2.2",
+    "uid": "^1.0.0",
     "xml-js": "^1.6.11"
   }
 }

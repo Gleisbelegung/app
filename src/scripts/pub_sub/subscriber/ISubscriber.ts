@@ -1,6 +1,6 @@
 import { PubSubConstants } from '../PubSubConstants';
 
 export interface ISubscriber<T> {
-    getName(): PubSubConstants;
+    getName(): string;
     trigger(data: T): void;
 }

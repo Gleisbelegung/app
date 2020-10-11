@@ -47,26 +47,34 @@
 </script>
 
 
-<table class="table is-striped is-hoverable is-bordered">
-	<thead>
-		<th />
-		{#each $platforms as platform}
-			<th><span>{platform.name}</span></th>
-		{/each}
-	</thead>
-	<tbody bind:this="{tableBodyElement}">
-		<!-- {#if $startTime !== null && timePerRow !== null}
-			{#each { length: 60 } as _, i}
-				<tr>
-					<td>{getTime()}</td>
-					{#each $platforms as platform}
-						<td>
-							<span
-								id={IdFormatter.timePlatformId(timePerRow, platform)} />
-						</td>
-					{/each}
-				</tr>
+<div class="table-container">
+	<table class="table is-striped is-hoverable is-bordered is-narrow">
+		<thead>
+			<th class="table-head" />
+			{#each $platforms as platform}
+				<th class="table-head"><span>{platform.name}</span></th>
 			{/each}
-		{/if} -->
-	</tbody>
-</table>
+		</thead>
+		<tbody bind:this="{tableBodyElement}">
+			
+		</tbody>
+	</table>
+</div>
+
+<style>
+	.table {
+		text-align: center;
+	}
+
+	.table-head {
+		position: sticky;
+		top: 0;
+		background-color: #505050;
+		border-top-width: 0 !important;
+	}
+
+	.table-container {
+		overflow-y: auto;
+		max-height: calc(100vh - 60px);
+	}
+</style>

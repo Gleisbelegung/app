@@ -6,6 +6,9 @@ import { trainsById } from '../../../stores/trains';
 import Train from '../../Train';
 import TrainDetails from '../../TrainDetails';
 import { platformsByName } from '../../../stores/platforms';
+import Platform from '../../Platform';
+import PubSub from '../../pub_sub/PubSub';
+import TrainDetailsChangedEvent from '../../pub_sub/events/train/details/TrainDetailsChangedEvent';
 
 export default class TrainDetailsProcessor implements IMessageProcessor {
 	getName(): string {
@@ -19,12 +22,12 @@ export default class TrainDetailsProcessor implements IMessageProcessor {
 		const isVisible: boolean = data.attributes.sichtbar === 'true';
 		const isAtPlatform: boolean = data.attributes.amgleis === 'true';
 
-		const platforms = get(platformsByName);
+		const platforms: Map<string, Platform> = get(platformsByName);
 
 		const details: TrainDetails = new TrainDetails(
 			<number>data.attributes.verspaetung,
-			platforms.get(data.attributes.gleis),
-			platforms.get(data.attributes.plangleis),
+			platforms.get(<string>data.attributes.gleis),
+			platforms.get(<string>data.attributes.plangleis),
 			<string>data.attributes.von,
 			<string>data.attributes.nach,
 			isVisible,
@@ -32,5 +35,7 @@ export default class TrainDetailsProcessor implements IMessageProcessor {
 		);
 
 		train.details = details;
+
+		PubSub.publish(new TrainDetailsChangedEvent(train, details));
 	}
 }

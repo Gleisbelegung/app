@@ -1,10 +1,13 @@
+import uid from 'uid';
+import stc from 'string-to-color';
 import TrainDetails from './TrainDetails';
 import TrainStop from './TrainStop';
 
 export default class Train {
-	public readonly name: string;
-
 	public readonly id: number;
+	public readonly uid: string;
+	public readonly name: string;
+	public readonly color: string;
 	private _details: TrainDetails;
 	private _stops: TrainStop[];
 
@@ -12,6 +15,9 @@ export default class Train {
 		this.id = id;
 		this.name = name;
 		this._stops = [];
+
+		this.uid = uid();
+		this.color = stc(this.uid);
 	}
 
 	public get details(): TrainDetails {

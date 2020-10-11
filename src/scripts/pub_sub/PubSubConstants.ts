@@ -3,5 +3,8 @@
 export enum PubSubConstants {
     TIME_CHANGED = 'time_change',
     MINUTE_CHANGED = 'minute_change',
-    NEW_TRAIN = 'train_new'
+	NEW_TRAIN = 'train_new',
+	TRAIN_DETAILS_CHANGED = 'train_details_changed',
+	TRAIN_SCHEDULE_CHANGED = 'train_schedule_changed',
+	TRAIN_ADD_TO_GRID = 'train_add_to_grid'
 }
