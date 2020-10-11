@@ -4,9 +4,9 @@ const app = new App({
 	target: document.body,
 	props: {
 		application: {
-			displayName: 'Template',
-			name: 'template',
-			url: 'template.serrer.dev',
+			displayName: 'Gleisbelegung',
+			name: 'gleisbelegung',
+			url: 'gleisbelegung.serret.dev',
 		},
 	},
 });
