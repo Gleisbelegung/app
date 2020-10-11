@@ -32,6 +32,6 @@ jobs:
       with:
         # Build directory to deploy
         build_dir: public/
-        fqdn: time-tracker.serret.dev
+        fqdn: gleisbelegung.serret.dev
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
