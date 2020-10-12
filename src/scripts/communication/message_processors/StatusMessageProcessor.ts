@@ -1,4 +1,3 @@
-import { Element } from 'xml-js';
 import IMessageProcessor from './IMessageProcessor';
 import WebSocketSingleton from '../WebSocketSingleton';
 import RegisterMessage from '../messages/RegisterMessage';
@@ -12,15 +11,15 @@ export default class StatusMessageProcessor implements IMessageProcessor {
 		return 'status';
 	}
 
-	process(data: Element) {
-		if (data.attributes.code === '300') {
+	process(data: any) {
+		if (data.code === '300') {
 			WebSocketSingleton.send(new RegisterMessage(
 				'Gleisbelegung',
 				'Displays the Facility in a table',
 				'0.0.1',
 				'manuel3108',
 			));
-		} else if (data.attributes.code === '220') {
+		} else if (data.code === '220') {
 			console.log('registered');
 			this.isRegistered = true;
 			WebSocketSingleton.send(new FacilityInfoMessage());

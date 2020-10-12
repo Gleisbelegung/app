@@ -1,8 +1,8 @@
-import { xml2js } from 'xml-js';
+import * as parser from 'fast-xml-parser';
+import IMessageProcessor from './IMessageProcessor';
 import StatusMessageProcessor from './StatusMessageProcessor';
 import FacilityInfoProcessor from './FacilityInfoProcessor';
-import IMessageProcessor from './IMessageProcessor';
-import PlatformsProcessor from './PlatformListProcessor';
+import PlatformListProcessor from './PlatformListProcessor';
 import TrainListProcessor from './TrainListProcessor';
 import TrainDetailsProcessor from './TrainDetailsProcessor';
 import TrainScheduleProcessor from './TrainScheduleProcessor';
@@ -16,7 +16,7 @@ export default class MessageProcessor {
 
 		this.messageProcessors.push(new StatusMessageProcessor());
 		this.messageProcessors.push(new FacilityInfoProcessor());
-		this.messageProcessors.push(new PlatformsProcessor());
+		this.messageProcessors.push(new PlatformListProcessor());
 		this.messageProcessors.push(new TrainListProcessor());
 		this.messageProcessors.push(new TrainDetailsProcessor());
 		this.messageProcessors.push(new TrainScheduleProcessor());
@@ -24,15 +24,21 @@ export default class MessageProcessor {
 	}
 
 	public readMessage(message: string) {
-		const { elements } = xml2js(message, { compact: false });
+		const jObject = parser.parse(message, { ignoreAttributes: false, attributeNamePrefix: '', arrayMode: true });
 
-		elements.forEach((data) => {
+		for (const [key, value] of Object.entries(jObject)) {
 			for (const messageProcessor of this.messageProcessors) {
-				if (messageProcessor.getName() === data.name) {
-					messageProcessor.process(data);
+				if (messageProcessor.getName() === key) {
+					if (Array.isArray(value)) {
+						value.forEach((v) => {
+							messageProcessor.process(v);
+						});
+					} else {
+						messageProcessor.process(value);
+					}
 					break;
 				}
 			}
-		});
+		}
 	}
 }

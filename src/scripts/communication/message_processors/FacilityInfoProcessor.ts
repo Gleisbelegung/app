@@ -1,4 +1,3 @@
-import { Element } from 'xml-js';
 import IMessageProcessor from './IMessageProcessor';
 import WebSocketSingleton from '../WebSocketSingleton';
 import { simbuild, id, name } from '../../../stores/facility';
@@ -9,10 +8,10 @@ export default class FacilityInfoProcessor implements IMessageProcessor {
 		return 'anlageninfo';
 	}
 
-	process(data: Element) {
-		simbuild.set(<number>data.attributes.simbuild);
-		id.set(<number>data.attributes.aid);
-		name.set(<string>data.attributes.name);
+	process(data: any) {
+		simbuild.set(<number>data.simbuild);
+		id.set(<number>data.aid);
+		name.set(<string>data.name);
 
 		WebSocketSingleton.send(new PlatformsMessage());
 	}

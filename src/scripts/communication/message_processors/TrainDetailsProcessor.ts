@@ -1,4 +1,3 @@
-import { Element } from 'xml-js';
 import { get } from 'svelte/store';
 import IMessageProcessor from './IMessageProcessor';
 import { MessageConstants } from '../MessageConstants';
@@ -15,21 +14,21 @@ export default class TrainDetailsProcessor implements IMessageProcessor {
 		return MessageConstants.TRAIN_DETAILS;
 	}
 
-	process(data: Element) {
+	process(data: any) {
 		const trains: Map<number, Train> = get(trainsById);
-		const train: Train = trains.get(<number>data.attributes.zid);
+		const train: Train = trains.get(<number>data.zid);
 
-		const isVisible: boolean = data.attributes.sichtbar === 'true';
-		const isAtPlatform: boolean = data.attributes.amgleis === 'true';
+		const isVisible: boolean = data.sichtbar === 'true';
+		const isAtPlatform: boolean = data.amgleis === 'true';
 
 		const platforms: Map<string, Platform> = get(platformsByName);
 
 		const details: TrainDetails = new TrainDetails(
-			<number>data.attributes.verspaetung,
-			platforms.get(<string>data.attributes.gleis),
-			platforms.get(<string>data.attributes.plangleis),
-			<string>data.attributes.von,
-			<string>data.attributes.nach,
+			<number>data.verspaetung,
+			platforms.get(<string>data.gleis),
+			platforms.get(<string>data.plangleis),
+			<string>data.von,
+			<string>data.nach,
 			isVisible,
 			isAtPlatform,
 		);

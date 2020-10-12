@@ -1,4 +1,3 @@
-import { DateTime } from 'luxon';
 import PubSub from '../pub_sub/PubSub';
 import OnNewTrain from '../pub_sub/subscriber/train/OnNewTrain';
 import Train from '../Train';

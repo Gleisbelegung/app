@@ -1,5 +1,4 @@
 import { ISubscriber } from './ISubscriber';
-import { PubSubConstants } from '../PubSubConstants';
 
 export default abstract class FunctionCallSubscriber<T> implements ISubscriber<T> {
 	protected callback: (data: T) => void;

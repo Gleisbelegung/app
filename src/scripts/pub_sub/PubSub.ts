@@ -1,6 +1,5 @@
 import { IEvent } from './events/IEvent';
 import { ISubscriber } from './subscriber/ISubscriber';
-import { PubSubConstants } from './PubSubConstants';
 
 class PubSub {
 	private static instance: PubSub = null;

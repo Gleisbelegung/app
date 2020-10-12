@@ -1,4 +1,3 @@
-import FunctionCallSubscriber from '../../FunctionCallSubscriber';
 import PubSubNameFormatter from '../../../PubSubNameFormatter';
 import { PubSubConstants } from '../../../PubSubConstants';
 import Train from '../../../../Train';

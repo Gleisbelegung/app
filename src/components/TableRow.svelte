@@ -6,28 +6,27 @@
 	let tableRowElement;
 
 	function createElements(ps) {
-		var options = {
+		const options = {
 			target: tableRowElement,
 			props: {
 				time: undefined,
-				platform: undefined
-			}
+				platform: undefined,
+			},
 		};
 
 		ps.forEach((platform) => {
 			options.props.time = time;
 			options.props.platform = platform;
 
-			let e = new TableElement(options);
-		})
+			new TableElement(options);
+		});
 	}
 
 	$: {
-		if($platforms !== undefined) {
+		if ($platforms !== undefined) {
 			createElements($platforms);
 		}
 	}
-
 </script>
 
 <tr bind:this="{tableRowElement}">

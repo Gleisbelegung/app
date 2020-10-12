@@ -1,4 +1,3 @@
-import { Element } from 'xml-js';
 import IMessageProcessor from './IMessageProcessor';
 import { MessageConstants } from '../MessageConstants';
 import Platform from '../../Platform';
@@ -11,13 +10,12 @@ export default class PlatformListProcessor implements IMessageProcessor {
 		return MessageConstants.PLATFORM_LIST;
 	}
 
-	process(data: Element) {
+	process(data: any) {
 		const platformsLocal: Platform[] = [];
-
-		const xml = data.elements;
+		const xml = data.bahnsteig;
 
 		xml.forEach((p) => {
-			platformsLocal.push(new Platform(<string>p.attributes.name));
+			platformsLocal.push(new Platform(<string>p.name));
 		});
 
 		platforms.set(platformsLocal);

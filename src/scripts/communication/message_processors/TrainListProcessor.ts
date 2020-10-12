@@ -1,4 +1,3 @@
-import { Element } from 'xml-js';
 import IMessageProcessor from './IMessageProcessor';
 import { MessageConstants } from '../MessageConstants';
 import Train from '../../Train';
@@ -14,14 +13,14 @@ export default class TrainListProcessor implements IMessageProcessor {
 		return MessageConstants.TRAIN_LIST;
 	}
 
-	process(data: Element) {
-		const { elements } = data;
+	process(data: any) {
+		const trainsXML = data.zug;
 		const trainsLocal: Train[] = [];
 
-		elements.forEach((t) => {
+		trainsXML.forEach((t) => {
 			const train: Train = new Train(
-				<number>t.attributes.zid,
-				<string>t.attributes.name,
+				<number>t.zid,
+				<string>t.name,
 			);
 			trainsLocal.push(train);
 

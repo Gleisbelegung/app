@@ -1,5 +1,4 @@
-import { Element } from 'xml-js';
-import { DateTime, Zone } from 'luxon';
+import { DateTime } from 'luxon';
 import IMessageProcessor from './IMessageProcessor';
 import { MessageConstants } from '../MessageConstants';
 import { startTime } from '../../../stores/time';
@@ -10,9 +9,9 @@ export default class TimeProcessor implements IMessageProcessor {
 		return MessageConstants.TIME;
 	}
 
-	process(data: Element) {
-		const timeBefore = <number>data.attributes.sender;
-		const oldTime = parseInt(<string>data.attributes.zeit, 10);
+	process(data: any) {
+		const timeBefore = <number>data.sender;
+		const oldTime = parseInt(<string>data.zeit, 10);
 
 		const difference = Date.now() - timeBefore;
 
