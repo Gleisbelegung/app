@@ -2,13 +2,14 @@ import TrainDetails from '../../../../TrainDetails';
 import PubSubNameFormatter from '../../../PubSubNameFormatter';
 import { PubSubConstants } from '../../../PubSubConstants';
 import Train from '../../../../Train';
-import { ISubscriber } from '../../ISubscriber';
+import Subscriber from '../../Subscriber';
 
-export default class OnTrainDetailsChanged implements ISubscriber<TrainDetails> {
+export default class OnTrainDetailsChanged extends Subscriber<TrainDetails> {
 	train: Train;
 	callback: (train: Train, data: TrainDetails) => void;
 
 	constructor(train: Train, callback: (train: Train, data: TrainDetails) => void) {
+		super();
 		this.train = train;
 		this.callback = callback;
 	}

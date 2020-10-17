@@ -20,7 +20,6 @@ export default class StatusMessageProcessor implements IMessageProcessor {
 				'manuel3108',
 			));
 		} else if (data.code === '220') {
-			console.log('registered');
 			this.isRegistered = true;
 			WebSocketSingleton.send(new FacilityInfoMessage());
 			WebSocketSingleton.send(new TimeMessage());

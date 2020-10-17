@@ -11,4 +11,8 @@ export default class PubSubNameFormatter {
 	public static format1(constant: PubSubConstants, platform: Platform, time: DateTime) : string {
 		return `${constant}_${platform.name}_${time.toMillis()}`;
 	}
+
+	public static format2(constant: PubSubConstants, trainId: number) : string {
+		return `${constant}_${trainId}`;
+	}
 }

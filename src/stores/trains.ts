@@ -9,3 +9,4 @@ export const trainsById = derived(trains, ($trains: Train[]) => {
 	});
 	return _trains;
 });
+export const trainsToShow = writable<Train[]>([]);

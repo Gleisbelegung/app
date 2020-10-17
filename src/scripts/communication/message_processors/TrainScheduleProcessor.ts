@@ -9,6 +9,8 @@ import { platformsByName } from '../../../stores/platforms';
 import Platform from '../../Platform';
 import PubSub from '../../pub_sub/PubSub';
 import TrainScheduleChangedEvent from '../../pub_sub/events/train/details/TrainScheduleChangedEvent';
+import FlagParser from '../../data/flags/FlagParser';
+import NewTrainFullyLoadedEvent from '../../pub_sub/events/train/NewTrainFullyLoadedEvent';
 
 export default class TrainScheduleProcessor implements IMessageProcessor {
 	getName(): string {
@@ -23,8 +25,14 @@ export default class TrainScheduleProcessor implements IMessageProcessor {
 
 		const stops: TrainStop[] = [];
 		data.gleis.forEach((s) => {
-			const arrival = DateTime.fromFormat(<string>s.an, 'HH:mm');
-			const departure = DateTime.fromFormat(<string>s.ab, 'HH:mm');
+			let arrival = null;
+			if (<string>s.an !== '') {
+				arrival = DateTime.fromFormat(<string>s.an, 'HH:mm');
+			}
+			let departure = null;
+			if (<string>s.ab !== '') {
+				departure = DateTime.fromFormat(<string>s.ab, 'HH:mm');
+			}
 
 			const stop = new TrainStop(
 				arrival,
@@ -35,12 +43,18 @@ export default class TrainScheduleProcessor implements IMessageProcessor {
 			);
 
 			stops.push(stop);
+
+			if (stop.rawFlags !== '') {
+				FlagParser.parse(train, stop);
+			}
 		});
 
 		train.stops = stops;
+		train.isFullyLoaded = true;
 
 		trains.set(get(trains));
 
 		PubSub.publish(new TrainScheduleChangedEvent(train, stops));
+		PubSub.publish(new NewTrainFullyLoadedEvent(train));
 	}
 }

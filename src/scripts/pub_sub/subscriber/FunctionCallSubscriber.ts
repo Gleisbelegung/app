@@ -1,9 +1,10 @@
-import { ISubscriber } from './ISubscriber';
+import Subscriber from './Subscriber';
 
-export default abstract class FunctionCallSubscriber<T> implements ISubscriber<T> {
+export default abstract class FunctionCallSubscriber<T> extends Subscriber<T> {
 	protected callback: (data: T) => void;
 
 	constructor(callback: (data: T) => void) {
+		super();
 		this.callback = callback;
 	}
 

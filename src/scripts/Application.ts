@@ -9,7 +9,6 @@ export default class Application {
 		const ws = WebSocketSingleton.getInstance();
 
 		ws.addEventListener('message', (event) => {
-			console.log('Message from server: ', event.data);
 			processor.readMessage(event.data);
 		});
 

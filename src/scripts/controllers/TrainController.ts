@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+import { get } from 'svelte/store'
 import PubSub from '../pub_sub/PubSub';
 import OnNewTrain from '../pub_sub/subscriber/train/OnNewTrain';
 import Train from '../Train';
@@ -6,6 +8,8 @@ import OnTrainScheduleChanged from '../pub_sub/subscriber/train/details/OnTrainS
 import TrainDetails from '../TrainDetails';
 import TrainStop from '../TrainStop';
 import AddTrainToGridElementEvent from '../pub_sub/events/grid/AddTrainToGridElementEvent';
+import { trainsById } from '../../stores/trains';
+import OnNewTrainFullyLoaded from '../pub_sub/subscriber/train/OnNewTrainFullyLoaded';
 
 export default class TrainController {
 	constructor() {
@@ -18,18 +22,38 @@ export default class TrainController {
 	}
 
 	public static onTrainDetailsChanged(train: Train, details: TrainDetails) {
-		// console.log('asdfa', details, train);
 	}
 
 	public static onTrainScheduleChanged(train: Train, stops: TrainStop[]) {
 		stops.forEach((stop) => {
-			let current = stop.arrival;
+			const current = stop.arrival;
 			const end = stop.departure;
 
-			do {
-				PubSub.publish(new AddTrainToGridElementEvent(stop.platform, current, train));
-				current = current.plus({ minute: 1 });
-			} while (current.toMillis() <= end.toMillis());
+			if (!stop.hasSuccessor()) {
+				TrainController.addTrain(train, stop, current, end);
+			} else {
+				const successorId = stop.getSuccessorId();
+				const trainMap: Map<number, Train> = get(trainsById);
+				const successor = trainMap.get(successorId);
+				if (successor !== undefined && successor.isFullyLoaded) {
+					TrainController.addTrain(train, stop, current, successor.stops[0].departure);
+				} else {
+					const unsubscribe = PubSub.subscribe(
+						new OnNewTrainFullyLoaded(successorId, (s: Train) => {
+							unsubscribe();
+							TrainController.addTrain(train, stop, current, s.stops[0].departure);
+						}),
+					);
+				}
+			}
 		});
+	}
+
+	public static addTrain(train: Train, stop: TrainStop, arrival: DateTime, departure: DateTime) {
+		let current = arrival;
+		do {
+			PubSub.publish(new AddTrainToGridElementEvent(stop.platform, current, train));
+			current = current.plus({ minute: 1 });
+		} while (current.toMillis() <= departure.toMillis());
 	}
 }

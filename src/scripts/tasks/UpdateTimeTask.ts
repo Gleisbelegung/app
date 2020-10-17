@@ -11,7 +11,6 @@ export default class UpdateTimeTask {
 
 	constructor() {
 		startTime.subscribe((time) => {
-			console.log('starting now');
 			this.lastSecond = time.second;
 			currentTime.set(time);
 			setInterval(this.work, 1000);

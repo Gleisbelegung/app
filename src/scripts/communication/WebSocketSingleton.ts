@@ -6,7 +6,6 @@ export default class WebSocketSingleton {
 	private webSocket: WebSocket;
 
 	private constructor() {
-		console.log('creating new WebSocket');
 		this.webSocket = new WebSocket('ws://localhost:3108');
 	}
 

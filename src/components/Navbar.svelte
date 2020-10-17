@@ -1,4 +1,7 @@
 <script>
+	import { simbuild, id, name } from '../stores/facility';
+	import { currentTime } from '../stores/time';
+
 	export let application;
 </script>
 
@@ -25,5 +28,15 @@
 				</div>
 			</div>
 		</div>
+	</div>
+
+	<div>
+		<span>simbuild: {$simbuild}</span>
+		<span>id: {$id}</span>
+		<span>name: {$name}</span>
+
+		{#if $currentTime !== null}
+			<span>time: {$currentTime.toFormat('HH:mm:ss')}</span>
+		{/if}
 	</div>
 </nav>

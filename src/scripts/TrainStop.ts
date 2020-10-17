@@ -7,6 +7,8 @@ export default class TrainStop {
 	public readonly platform: Platform;
 	public readonly plannedPlatform: Platform;
 	public readonly rawFlags: string;
+	private successorId: number;
+	private _isPassing: boolean;
 
 	constructor(
 		arrival: DateTime,
@@ -20,5 +22,25 @@ export default class TrainStop {
 		this.platform = platform;
 		this.plannedPlatform = plannedPlatform;
 		this.rawFlags = rawFlags;
+	}
+
+	public setSuccessorId(v : number) {
+		this.successorId = v;
+	}
+
+	public getSuccessorId(): number {
+		return this.successorId;
+	}
+
+	public set isPassing(v : boolean) {
+		this._isPassing = v;
+	}
+
+	public get isPassing(): boolean {
+		return this._isPassing;
+	}
+
+	public hasSuccessor(): boolean {
+		return this.successorId !== undefined;
 	}
 }

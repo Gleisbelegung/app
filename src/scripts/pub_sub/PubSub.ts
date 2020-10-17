@@ -1,10 +1,10 @@
 import { IEvent } from './events/IEvent';
-import { ISubscriber } from './subscriber/ISubscriber';
+import Subscriber from './subscriber/Subscriber';
 
 class PubSub {
 	private static instance: PubSub = null;
 
-	private subscribers: Map<string, ISubscriber<any>[]>;
+	private subscribers: Map<string, Subscriber<any>[]>;
 
 	constructor() {
 		this.subscribers = new Map();
@@ -26,16 +26,24 @@ class PubSub {
 		}
 	}
 
-	public subscribe<T>(subsciber: ISubscriber<T>) {
-		let list = this.subscribers.get(subsciber.getName());
+	public subscribe<T>(subscriber: Subscriber<T>): () => void {
+		let list = this.subscribers.get(subscriber.getName());
 
 		if (list === undefined) {
 			list = [];
 		}
 
-		list.push(subsciber);
+		list.push(subscriber);
 
-		this.subscribers.set(subsciber.getName(), list);
+		this.subscribers.set(subscriber.getName(), list);
+
+		return () => this.unsubscribe(subscriber.getName(), subscriber.uid);
+	}
+
+	private unsubscribe(name: string, uid: string) {
+		const subs = this.subscribers.get(name);
+		const filteredSubs = subs.filter((s) => s.uid !== uid);
+		this.subscribers.set(name, filteredSubs);
 	}
 }
 

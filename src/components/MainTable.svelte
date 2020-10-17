@@ -76,5 +76,6 @@
 	.table-container {
 		overflow-y: auto;
 		max-height: calc(100vh - 60px);
+		margin-bottom: 0;
 	}
 </style>
