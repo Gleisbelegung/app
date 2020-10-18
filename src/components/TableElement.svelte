@@ -4,16 +4,13 @@
 	import PubSub from "../scripts/pub_sub/PubSub";
 	import OnAddTrainToGridElement from '../scripts/pub_sub/subscriber/grid/OnAddTrainToGridElement'
 	import Train from "../scripts/Train";
-	import TrainInformations from './TrainInformations.svelte'
 	import { trainsToShow } from '../stores/trains'
-import TrainController from "../scripts/controllers/TrainController";
 
 	export let platform: Platform;
 	export let time: DateTime;
 
 	let tableElement: HTMLElement;
 	let text = "";
-	let trainInformationsVisible = false;
 	let trains: Train[] = []
 
 	PubSub.subscribe(new OnAddTrainToGridElement(platform, time, (train) => {
@@ -42,7 +39,18 @@ import TrainController from "../scripts/controllers/TrainController";
 		for (let i = 0; i < trains.length; i += 1) {
 			const train = trains[i];
 
-			text += train.name;
+			const stop = train.getStopByTime(time);
+			if (stop.hasPredecessor()) {
+				continue;
+			}
+
+			if (stop !== null && stop.hasSuccessor()) {
+				text += `${train.getNameWithDelay()} -> ${stop.successor.getNameWithDelay()}`
+			} else {
+				text += train.getNameWithDelay();
+			}
+
+
 			if (i < trains.length - 1) {
 				text += ', ';
 			}

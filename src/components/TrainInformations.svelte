@@ -1,9 +1,49 @@
 <script lang="ts">
+	import Train from '../scripts/Train';
 	import { trainsToShow }  from '../stores/trains'
+
+	let localTrains: Train[] = [];
+	let informationsElement: HTMLElement;
+
+	$: {
+		if ($trainsToShow !== undefined) {
+			localTrains = [];
+			addOtherTrainsIfNecessary($trainsToShow);
+		}
+	}
+
+	function addOtherTrainsIfNecessary(trains: Train[]) {
+		trains.forEach(train => {
+			train.stops.forEach((stop) => {
+				if (stop.hasSuccessor()) {
+					if (!localTrains.includes(stop.successor)) {
+						localTrains.push(stop.successor);
+					}
+				}
+			})
+			if (!localTrains.includes(train)) {
+				localTrains.push(train);
+			}
+		});
+
+		localTrains = localTrains;
+
+		adjustView();
+	}
+
+	function adjustView() {
+		if (informationsElement !== undefined) {
+			if (localTrains.length == 0) {
+				informationsElement.style.display = 'none';
+			} else {
+				informationsElement.style.display = 'block';
+			}
+		}
+	}
 </script>
 
-<div class="train-informations">
-	{#each $trainsToShow as train}
+<div bind:this={informationsElement} class="train-informations">
+	{#each localTrains as train}
 		<div class="columns">
 			<div class="column">
 				<span>{train.id}</span><br>
@@ -49,6 +89,7 @@
 		border-top-left-radius: 25px;
 		border-top-right-radius: 25px;
 		padding: 10px;
+		display: none;
 
 		-webkit-box-shadow: 0px 0px 10px 8px rgba(48,48,48,1);
 		-moz-box-shadow: 0px 0px 10px 8px rgba(48,48,48,1);

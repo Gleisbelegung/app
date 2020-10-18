@@ -1,7 +1,7 @@
 import Platform from './Platform';
 
 export default class TrainDetails {
-	public readonly delay: number;
+	public readonly delay: Number;
 	public readonly platform: Platform;
 	public readonly plannedPlatform: Platform;
 	public readonly from: string;
@@ -10,7 +10,7 @@ export default class TrainDetails {
 	public readonly isAtPlatform: boolean;
 
 	constructor(
-		delay: number,
+		delay: Number,
 		platform: Platform,
 		plannedPlatform: Platform,
 		from: string,

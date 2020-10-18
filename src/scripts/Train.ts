@@ -46,10 +46,26 @@ export default class Train {
 		this._isFullyLoaded = v;
 	}
 
+	public getNameWithDelay(): string {
+		let text = this.name;
+		if (this.details.delay !== 0) {
+			text += ` (${this.details.delay > 0 ? '+' : ''}${this.details.delay})`;
+		}
+		return text;
+	}
+
 	public getStopByTime(time: DateTime): TrainStop | null {
 		for (let i = 0; i < this._stops.length; i += 1) {
 			const stop = this._stops[i];
-			if (time >= stop.arrival && time <= stop.departure) {
+
+			if (stop.hasSuccessor() && time >= stop.arrival
+				&& time <= stop.successor.stops[0].departure) {
+				return stop;
+			} else if (stop.hasPredecessor()
+				&& time >= stop.predecessor.stops[stop.predecessor.stops.length - 1].arrival
+				&& time <= stop.departure) {
+				return stop;
+			} else if (time >= stop.arrival && time <= stop.departure) {
 				return stop;
 			}
 		}

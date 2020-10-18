@@ -37,21 +37,21 @@ export default class TrainController {
 				const successor = trainMap.get(successorId);
 
 				if (successor !== undefined && successor.isFullyLoaded) {
-					TrainController.addTrain(train, stop, current, successor.stops[0].departure);
-
 					/* eslint-disable-next-line */
 					stop.successor = successor;
 					successor.stops[0].predecessor = train;
+
+					TrainController.addTrain(train, stop, current, successor.stops[0].departure);
 				} else {
 					const unsubscribe = PubSub.subscribe(
 						new OnNewTrainFullyLoaded(successorId, (s: Train) => {
-							unsubscribe();
-							TrainController.addTrain(train, stop, current, s.stops[0].departure);
-
 							/* eslint-disable-next-line */
 							stop.successor = s;
 							/* eslint-disable-next-line */
 							s.stops[0].predecessor = train;
+
+							unsubscribe();
+							TrainController.addTrain(train, stop, current, s.stops[0].departure);
 						}),
 					);
 				}

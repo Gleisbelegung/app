@@ -24,7 +24,7 @@ export default class TrainDetailsProcessor implements IMessageProcessor {
 		const platforms: Map<string, Platform> = get(platformsByName);
 
 		const details: TrainDetails = new TrainDetails(
-			<number>data.verspaetung,
+			Number(<number>data.verspaetung),
 			platforms.get(<string>data.gleis),
 			platforms.get(<string>data.plangleis),
 			<string>data.von,
