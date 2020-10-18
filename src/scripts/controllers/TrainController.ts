@@ -8,8 +8,8 @@ import OnTrainScheduleChanged from '../pub_sub/subscriber/train/details/OnTrainS
 import TrainDetails from '../TrainDetails';
 import TrainStop from '../TrainStop';
 import AddTrainToGridElementEvent from '../pub_sub/events/grid/AddTrainToGridElementEvent';
-import { trainsById } from '../../stores/trains';
 import OnNewTrainFullyLoaded from '../pub_sub/subscriber/train/OnNewTrainFullyLoaded';
+import { trainsById } from '../../stores/trains';
 
 export default class TrainController {
 	constructor() {
@@ -33,15 +33,25 @@ export default class TrainController {
 				TrainController.addTrain(train, stop, current, end);
 			} else {
 				const successorId = stop.getSuccessorId();
-				const trainMap: Map<number, Train> = get(trainsById);
+				const trainMap: Map<Number, Train> = get(trainsById);
 				const successor = trainMap.get(successorId);
+
 				if (successor !== undefined && successor.isFullyLoaded) {
 					TrainController.addTrain(train, stop, current, successor.stops[0].departure);
+
+					/* eslint-disable-next-line */
+					stop.successor = successor;
+					successor.stops[0].predecessor = train;
 				} else {
 					const unsubscribe = PubSub.subscribe(
 						new OnNewTrainFullyLoaded(successorId, (s: Train) => {
 							unsubscribe();
 							TrainController.addTrain(train, stop, current, s.stops[0].departure);
+
+							/* eslint-disable-next-line */
+							stop.successor = s;
+							/* eslint-disable-next-line */
+							s.stops[0].predecessor = train;
 						}),
 					);
 				}

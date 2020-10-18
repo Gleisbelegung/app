@@ -6,6 +6,7 @@
 	import Train from "../scripts/Train";
 	import TrainInformations from './TrainInformations.svelte'
 	import { trainsToShow } from '../stores/trains'
+import TrainController from "../scripts/controllers/TrainController";
 
 	export let platform: Platform;
 	export let time: DateTime;
@@ -18,7 +19,7 @@
 	PubSub.subscribe(new OnAddTrainToGridElement(platform, time, (train) => {
 		trains.push(train)
 
-		text = train.name;
+		text = trainsToString()
 		tableElement.style.backgroundColor = train.color;
 
 		const stop = train.getStopByTime(time);
@@ -35,6 +36,19 @@
 			tableElement.style.cursor = 'pointer'
 		}
 	}));
+
+	function trainsToString() {
+		let text = '';
+		for (let i = 0; i < trains.length; i += 1) {
+			const train = trains[i];
+
+			text += train.name;
+			if (i < trains.length - 1) {
+				text += ', ';
+			}
+		}
+		return text;
+	}
 </script>
 
 <td class="table-element" bind:this="{tableElement}" on:click="{() => $trainsToShow = trains}">

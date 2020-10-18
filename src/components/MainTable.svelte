@@ -7,7 +7,7 @@
 	import OnMinuteChanged from '../scripts/pub_sub/subscriber/time/OnMinuteChanged';
 	import TableRow from './TableRow.svelte'
 
-	let tableBodyElement;
+	let tableBodyElement: HTMLElement;
 
 	let timePerRow;
 	$: if ($startTime !== null) {
@@ -71,6 +71,7 @@
 		top: 0;
 		background-color: #505050;
 		border-top-width: 0 !important;
+		z-index: 2;
 	}
 
 	.table-container {

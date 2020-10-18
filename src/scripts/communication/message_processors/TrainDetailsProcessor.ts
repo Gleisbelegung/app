@@ -15,8 +15,8 @@ export default class TrainDetailsProcessor implements IMessageProcessor {
 	}
 
 	process(data: any) {
-		const trains: Map<number, Train> = get(trainsById);
-		const train: Train = trains.get(<number>data.zid);
+		const trains: Map<Number, Train> = get(trainsById);
+		const train: Train = trains.get(Number(data.zid));
 
 		const isVisible: boolean = data.sichtbar === 'true';
 		const isAtPlatform: boolean = data.amgleis === 'true';

@@ -18,8 +18,8 @@ export default class TrainScheduleProcessor implements IMessageProcessor {
 	}
 
 	process(data: any) {
-		const trainsLocal: Map<number, Train> = get(trainsById);
-		const train: Train = trainsLocal.get(<number>data.zid);
+		const trainsLocal: Map<Number, Train> = get(trainsById);
+		const train: Train = trainsLocal.get(Number(data.zid));
 
 		const platforms: Map<string, Platform> = get(platformsByName);
 

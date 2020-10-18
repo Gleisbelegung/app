@@ -2,9 +2,9 @@ import IMessage from './IMessage';
 import { MessageConstants } from '../MessageConstants';
 
 export default class TrainDetailsMessage implements IMessage {
-	private readonly trainId: number;
+	private readonly trainId: Number;
 
-	constructor(trainId: number) {
+	constructor(trainId: Number) {
 		this.trainId = trainId;
 	}
 

@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon';
 import Platform from './Platform';
+import Train from './Train';
+import TrainDetails from './TrainDetails';
 
 export default class TrainStop {
 	public readonly arrival: DateTime;
@@ -7,6 +9,8 @@ export default class TrainStop {
 	public readonly platform: Platform;
 	public readonly plannedPlatform: Platform;
 	public readonly rawFlags: string;
+	public successor: Train;
+	public predecessor: Train;
 	private successorId: number;
 	private _isPassing: boolean;
 
@@ -38,6 +42,10 @@ export default class TrainStop {
 
 	public get isPassing(): boolean {
 		return this._isPassing;
+	}
+
+	public hasPredecessor(): boolean {
+		return this.predecessor !== undefined;
 	}
 
 	public hasSuccessor(): boolean {

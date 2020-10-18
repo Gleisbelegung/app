@@ -1,21 +1,39 @@
 <script lang="ts">
-	import { trainsToShow } from '../stores/trains'
+	import { trainsToShow }  from '../stores/trains'
 </script>
 
 <div class="train-informations">
 	{#each $trainsToShow as train}
 		<div class="columns">
 			<div class="column">
-				<span>{train.id}</span>
+				<span>{train.id}</span><br>
+				<span>{train.name}</span><br>
+				<span>{train.details.from}</span><br>
+				<span>{train.details.to}</span><br>
 			</div>
 			<div class="column">
-				<span>{train.name}</span>
+				{#each train.stops as stop}
+					{#if stop.arrival !== null}
+						<span>{stop.arrival.toFormat('HH:mm')}</span><br>
+					{/if}
+				{/each}
 			</div>
 			<div class="column">
-				<span>{train.details.from}</span>
+				{#each train.stops as stop}
+					{#if stop.departure !== null}
+						<span>{stop.departure.toFormat('HH:mm')}</span><br>
+					{/if}
+				{/each}
 			</div>
 			<div class="column">
-				<span>{train.details.to}</span>
+				{#each train.stops as stop}
+					<span>{stop.platform.name}</span><br>
+				{/each}
+			</div>
+			<div class="column">
+				{#each train.stops as stop}
+					<span>{stop.rawFlags}</span><br>
+				{/each}
 			</div>
 		</div>
 	{/each}
