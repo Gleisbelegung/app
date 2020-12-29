@@ -1,5 +1,5 @@
 import { DateTime } from 'luxon';
-import uid from 'uid';
+import { uid } from 'uid';
 import stc from 'string-to-color';
 import TrainDetails from './TrainDetails';
 import TrainStop from './TrainStop';

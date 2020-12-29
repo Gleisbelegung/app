@@ -1,4 +1,4 @@
-import uid from 'uid'
+import { uid } from 'uid'
 import { ISubscriber } from './ISubscriber';
 
 export default abstract class Subscriber<T> implements ISubscriber<T> {
