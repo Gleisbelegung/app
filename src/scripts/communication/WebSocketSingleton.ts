@@ -6,7 +6,7 @@ export default class WebSocketSingleton {
 	private webSocket: WebSocket;
 
 	private constructor() {
-		this.webSocket = new WebSocket('ws://localhost:3108');
+		this.webSocket = new WebSocket('ws://localhost:3001');
 	}
 
 	public static getInstance() : WebSocket {

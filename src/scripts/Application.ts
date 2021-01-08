@@ -8,6 +8,11 @@ export default class Application {
 
 		const ws = WebSocketSingleton.getInstance();
 
+		ws.addEventListener('open', (event) => {
+			console.log("on open")
+			ws.send("client");
+		})
+
 		ws.addEventListener('message', (event) => {
 			processor.readMessage(event.data);
 		});
